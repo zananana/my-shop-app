@@ -56,6 +56,10 @@
     padding: 6px;
   }
 
+  .loader {
+    text-align: center;
+  }
+
   .product-box {
     display: -ms-flexbox;
     display: flex;

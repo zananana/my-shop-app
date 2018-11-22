@@ -9,6 +9,12 @@ class UserCart extends Component {
         this.props.removeFromCart(cartItem);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.cart){
+            localStorage.setItem('cartItems', JSON.stringify(nextProps.cart));
+        }
+    }
+
     sumItems() {
         let total = 0;
         this.props.cart.map( c => ( total += c.price));
@@ -17,11 +23,12 @@ class UserCart extends Component {
 
     render() {
         const { cart } = this.props;
+
         return (
                 <section className="user-cart"><h4>Twój koszyk</h4>
                     <ul className="user-cart--list">
                     {cart.map( (cartItem, index) => (
-                    <li key={cartItem.id}>
+                    <li key={cartItem.cart_id}>
                         <button onClick={()=>this.removeFromCart(cartItem)}>x</button>
                         {index} - {cartItem.name} - {cartItem.price} zł
                     </li>))}

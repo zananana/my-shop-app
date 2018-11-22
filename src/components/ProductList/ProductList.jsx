@@ -5,7 +5,8 @@ import {getProducts, addToCart} from '../../actions/productActions';
 
 class ProductList extends Component {
     state = {
-        displayedProducts: []
+        displayedProducts: [],
+        loadingProducts: true
     }
 
     componentDidMount() {
@@ -15,6 +16,7 @@ class ProductList extends Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.products){
             this.setState({ displayedProducts: nextProps.products });
+            this.setState({ loadingProducts: false });
         }
     }
 
@@ -32,12 +34,13 @@ class ProductList extends Component {
     }
 
     render() {
+        const { loadingProducts, displayedProducts } = this.state;
         return (
             <section className="product-list">
 
                 <div className="search"><input className="search-input" placeholder="Szukaj..." onChange={this.searchHandler}/></div>
-
-                {this.state.displayedProducts.map( product => (
+                {loadingProducts && <div className="loader">Laduje liste produktow...</div>}
+                {displayedProducts.map( product => (
                     <div className="product-box" key={product.id}>
                         <div><img className="product-box--image" alt="" src={product.photo}/></div>
                         <div><h2>{product.name}</h2>
